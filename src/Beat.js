@@ -9,6 +9,7 @@ const Mapping = {
   tftt: "A/z/A/A",
   fttt: "z/A/A/A/",
   ftff: "zA",
+  fftf: "zzA/z",
   fftt: "zzA/A/",
   ffft: "zzzA/",
   ffff: "z",

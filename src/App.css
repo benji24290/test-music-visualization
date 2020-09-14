@@ -41,6 +41,8 @@
 }
 
 #round {
+  margin: 50px auto;
+  position: relative;
   width: 320px;
   height: 320px;
   border-radius: 100%;

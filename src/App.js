@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import abcjs from "abcjs";
 import "abcjs/abcjs-audio.css";
-import registerAudioContext from "abcjs/src/synth/register-audio-context";
 import Beat from "./Beat";
 var myContext = new AudioContext();
+/*
 const example1 = `X:1
 L:1/8
 K:D
 z AA AA A2
 `;
-const example3 = `X:2
+let example3 = `X:2
+L:1/8
+AA A/A/A/A/ AA A2
+`;
+const example4 = `X:2
 L:1/8
 AA A/A/A/A/ AA A2
 `;
@@ -20,9 +23,12 @@ const example2 = `K:Am
 B2BB B2BB|"Am"A2AA c2dd|e2eg e2c2|"D"d2dd d2dd|d2dd d2cd|
 "Am"e2cc A2c2|"G"BAG2 BAG2|"Am"A2AA A2AA|A2AA A2AA|:"Am"e4 a3e|"G"g2d2- d2eg|
 "Am"a2aa ged2|"Em"e2ee e2ee|"Am"e4 a3e|"G"g2d2- d2Bc|"Em"d2e2 dcB2|"Am"A2AA A2AA:|`;
+
+*/
 function App() {
   const [synth, setSynth] = useState(null);
-  const [stop, setStop] = useState(false);
+  //const [stop, setStop] = useState(false);
+  const [chord, setChord] = useState("z z z z");
   const [beats, setBeats] = useState([
     { state: false, type: "full" },
     { state: false, type: "quarter" },
@@ -45,7 +51,7 @@ function App() {
     console.log("render");
 
     var synth = new abcjs.synth.CreateSynth();
-    var visualObj = abcjs.renderAbc("paper", example3);
+    var visualObj = abcjs.renderAbc("paper", chord);
     console.log(abcjs);
     synth
       .init({
@@ -69,8 +75,8 @@ function App() {
             setSynth(synth);
           });
       });
-  }, []);
-
+  }, [chord]);
+  /*
   const restart = (s) => {
     console.log(stop);
     if (!stop) {
@@ -80,31 +86,12 @@ function App() {
         s.start();
       }
     }
-  };
+  };*/
 
   return (
     <div className="App">
-      {synth && (
-        <button
-          onClick={() => {
-            if (false) {
-              synth.stop();
-              //setStop(true);
-              console.log("stop", stop);
-            } else {
-              synth.stop();
-              synth.start();
-              console.log("start", stop);
-            }
-          }}
-        >
-          Start
-        </button>
-      )}
-      <div id="paper"></div>
       <div id="round">
         {beats.map((beat, i) => {
-          console.log(beat);
           return (
             <Beat
               type={beat.type}
@@ -113,10 +100,29 @@ function App() {
               index={i}
               set={setBeats}
               beats={beats}
+              setChord={setChord}
             ></Beat>
           );
         })}
       </div>
+      {synth && (
+        <button
+          onClick={() => {
+            if (false) {
+              /*synth.stop();
+              //setStop(true);
+              console.log("stop", stop);</div>*/
+            } else {
+              synth.stop();
+              synth.start();
+              //console.log("start", stop);
+            }
+          }}
+        >
+          Start
+        </button>
+      )}
+      <div id="paper"></div>
     </div>
   );
 }
